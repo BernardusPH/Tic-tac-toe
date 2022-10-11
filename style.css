@@ -1,0 +1,240 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+body {
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+main{
+  margin: 2rem;
+  width: 100%;
+  
+}
+:root {
+  --cell-size: 100px;
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+.playerInfo{
+  text-align: center;
+}
+    .playerInfo select{
+      font-size: 2rem;
+      font-family: inherit;
+      cursor: pointer;
+     
+    }
+    .playerInfo select:checked{
+      background-color: aqua;
+    }
+    .playerInfo button{
+      border: 3px solid rgb(40, 34, 34);
+      background-color: red;
+      display: block;
+      margin-top: 2rem;
+      width: 80;
+      padding: 10px;
+      font-size: 2rem;
+      margin:2rem auto 0;
+      cursor: pointer;
+    }
+    .playerInfo button:hover{
+      opacity: .8;
+    }
+    .playerInfo h1.Xturn{
+      color: red;
+      
+    }
+    .playerInfo h1.Oturn{
+      color: green;
+      
+    }
+.board {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+
+}
+.threeBythree{
+  grid-template-columns: repeat(3, auto);
+}
+    .threeBythree .cell:nth-child(3n){
+      border-right: none;
+    }
+    .threeBythree .cell:nth-child(3n+1){
+      border-left: none;
+    }
+    .threeBythree .cell:nth-child(2),
+    .threeBythree .cell:nth-child(3),
+    .threeBythree .cell:first-child{
+      border-top: none;
+    }
+
+    .threeBythree .cell:nth-child(7),
+    .threeBythree .cell:nth-child(8),
+    .threeBythree .cell:last-child{
+      border-bottom: none;
+    }
+
+
+.fiveByfive{
+  grid-template-columns: repeat(5, auto);
+}
+    .fiveByfive .cell:first-child,
+    .fiveByfive .cell:nth-child(2),
+    .fiveByfive .cell:nth-child(3),
+    .fiveByfive .cell:nth-child(4),
+    .fiveByfive .cell:nth-child(5)
+    {
+    border-top: none;
+    }
+    .fiveByfive .cell:nth-child(5n){
+      border-right: none;
+    }
+    .fiveByfive .cell:nth-child(5n+1){
+      border-left: none;
+    }
+    .fiveByfive .cell:last-child,
+    .fiveByfive .cell:nth-child(21),
+    .fiveByfive .cell:nth-child(22),
+    .fiveByfive .cell:nth-child(23),
+    .fiveByfive .cell:nth-child(24)
+    {
+    border-bottom: none;
+    }
+    
+
+.sevenByseven{
+  grid-template-columns: repeat(7, auto);
+}
+.sevenByseven .cell:first-child,
+.sevenByseven .cell:nth-child(2),
+.sevenByseven .cell:nth-child(3),
+.sevenByseven .cell:nth-child(4),
+.sevenByseven .cell:nth-child(5),
+.sevenByseven .cell:nth-child(6),
+.sevenByseven .cell:nth-child(7)
+{
+border-top: none;
+}
+.sevenByseven .cell:nth-child(7n){
+  border-right: none;
+}
+.sevenByseven .cell:nth-child(7n+1){
+  border-left: none;
+}
+.sevenByseven .cell:last-child,
+.sevenByseven .cell:nth-child(43),
+.sevenByseven .cell:nth-child(44),
+.sevenByseven .cell:nth-child(45),
+.sevenByseven .cell:nth-child(46),
+.sevenByseven .cell:nth-child(47),
+.sevenByseven .cell:nth-child(48)
+{
+border-bottom: none;
+}
+
+
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 3px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.cell.x,
+.cell.circle {
+  cursor: not-allowed;
+}
+
+
+/* x */
+.cell.x::after,
+.cell.x::before{
+  background-color: rgb(255, 0, 0);
+}
+
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  background-color: rgb(255, 0, 0);
+  opacity: .5;
+}
+
+.cell.x::before,
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+.board.x .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+}
+.cell.x::before,
+.board.x .cell:not(.circle):hover::before {
+  transform: rotate(45deg);
+}
+.cell.x::after,
+.board.x .cell:not(.circle):hover::after {
+  transform: rotate(-45deg);
+}
+/* circle */
+.cell.circle::before,
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::before,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+}
+
+.cell.circle::before,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+  background-color: green;
+}
+.cell.circle::after,
+.board.circle .cell:not(.x):not(.circle):hover::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: rgb(0, 0, 0);
+}
+
+.winning-message {
+    display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 5rem;
+}
+.winning-message button{
+    font-size: 3rem;
+    background-color: white;
+    border: 5px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+.winning-message button:hover{
+  background-color:black;
+  border-color: white;  
+  color: white;
+}
+.winning-message.show{
+    display: flex;
+}
+

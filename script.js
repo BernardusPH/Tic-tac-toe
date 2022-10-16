@@ -64,7 +64,7 @@ const myApp = angular
     let cellElements;
 
     const board = document.querySelector("#board");
-    let select = document.querySelector("#size");
+
 
     let circleTurn;
     $scope.turnMessage = "its X's turn";
@@ -82,7 +82,7 @@ const myApp = angular
     };
 
     startGame();
-    $scope.changed = () => {
+    $scope.changeGame = () => {
       return startGame();
     };
     restartButton.forEach((item) => {

@@ -14,7 +14,7 @@
       <div class="playerInfo">
         <select
           ng-model="SelectedTable"
-          ng-change="changed();turnMessagefunc()"
+          ng-change="changeGame();turnMessagefunc()"
         >
           <option ng-repeat="x in tableSize" ng-value="{{x.val}}">
             {{x.view}}

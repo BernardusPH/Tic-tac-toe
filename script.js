@@ -1,6 +1,7 @@
 const myApp = angular
   .module("myApp", [])
   .controller("mycont", function ($scope) {
+    //Table size, using a dropdown select to choose
     $scope.tableSize = [
       { val: 9, view: "3X3" },
       { val: 25, view: "5X5" },
@@ -16,6 +17,7 @@ const myApp = angular
       "[data-winning-message-text]"
     );
 
+    //Getting the data need to win on each table
     const WINNING_COMBINATIONS_3x3 = [
       [0, 1, 2],
       [3, 4, 5],
@@ -71,6 +73,7 @@ const myApp = angular
 
     $scope.TurnClass = "Xturn";
 
+    //Showing who's turn it is
     $scope.turnMessagefunc = () => {
       if (circleTurn) {
         $scope.turnMessage = "its O's turn";
@@ -82,6 +85,8 @@ const myApp = angular
     };
 
     startGame();
+
+    //When a new table is chosen then create new game with the chosen table size
     $scope.changeGame = () => {
       return startGame();
     };
@@ -89,8 +94,13 @@ const myApp = angular
       item.addEventListener("click", startGame);
     });
 
+//start game here,
+//game will start with X's turn
+//all the cells will get a click function which only works once
+
     function startGame() {
       circleTurn = false;
+
 
       createGame($scope.SelectedTable);
       cellElements.forEach((cell) => {
@@ -103,6 +113,10 @@ const myApp = angular
       winningMessageElement.classList.remove("show");
     }
 
+    //Create the board
+    //the size depends on the chosen select value
+    //when restarting clear board and create new one
+    //using vanila js to create all the cells
     function createGame(size) {
       board.innerHTML = "";
       if (size == 9) {
@@ -125,6 +139,11 @@ const myApp = angular
       }
       cellElements = document.querySelectorAll(".cell");
     }
+
+    //When clicked, that cell will have a new class with the right turn
+    //after click check if a player has one using the a dif function
+    // if no winner then continue
+    // if all cells all full then draw
     function handleClick(e) {
       $scope.turnMessage = !$scope.turnMessage;
       const cell = e.target;
@@ -139,6 +158,14 @@ const myApp = angular
         setBoardHoverClass();
       }
     }
+    function placeMark(cell, currentClass) {
+      cell.classList.add(currentClass);
+    }
+    function swapTurns() {
+      circleTurn = !circleTurn;
+    }
+
+    //Game ends in a draw
     function endGame(draw) {
       if (draw) {
         winningMessageTextElement.innerHTML = `Draw`;
@@ -149,7 +176,7 @@ const myApp = angular
       }
       winningMessageElement.classList.add("show");
     }
-
+//Check if draw
     function isDraw() {
       return [...cellElements].every((cell) => {
         return (
@@ -158,20 +185,19 @@ const myApp = angular
         );
       });
     }
-    function placeMark(cell, currentClass) {
-      cell.classList.add(currentClass);
-    }
+    //
+    
 
-    function swapTurns() {
-      circleTurn = !circleTurn;
-    }
-
+  //Special functions which is mostly use for the hover effect
+  //it checks which turn is it and use the correct image as a hover effect
     function setBoardHoverClass() {
       board.classList.remove(X_CLASS);
       board.classList.remove(CIRCLE_CLASS);
       if (circleTurn) board.classList.add(CIRCLE_CLASS);
       else board.classList.add(X_CLASS);
     }
+
+    //uses a formula to check if a player has won
     function checkWin(currentClass) {
       if ($scope.SelectedTable == 9)
         return winningMath(WINNING_COMBINATIONS_3x3, currentClass);
